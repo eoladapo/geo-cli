@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import * as esbuild from 'esbuild-wasm';
-import { write } from 'fs';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 
 const el = document.getElementById('root');
@@ -40,7 +39,7 @@ const App = () => {
       entryPoints: ['index.js'],
       bundle: true,
       write: false,
-      plugins: [unpkgPathPlugin()],
+      plugins: [unpkgPathPlugin(input)],
       define: { 'process.env.NODE_ENV': '"production"', global: 'window' },
     });
 
