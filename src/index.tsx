@@ -46,7 +46,7 @@ const App = () => {
 
     console.log(result.outputFiles[0].text);
 
-    setCode(result.code);
+    setCode(result.outputFiles[0].text);
   }
 
   return (
