@@ -1,3 +1,4 @@
+import 'bulmaswatch/superhero/bulmaswatch.min.css';
 import { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import * as esbuild from 'esbuild-wasm';
@@ -47,8 +48,7 @@ const App = () => {
       define: { 'process.env.NODE_ENV': '"production"', global: 'window' },
     });
 
-    console.log(result.outputFiles[0].text);
-
+    // console.log(result.outputFiles[0].text);
     // setCode(result.outputFiles[0].text);
 
     iframe.current.contentWindow.postMessage(result.outputFiles[0].text, '*');
