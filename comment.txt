@@ -1,0 +1,5 @@
+for transform or transpile only
+const result = await ref.current.transform(input, {
+          loader: 'jsx',
+          target: 'es2015',
+});
