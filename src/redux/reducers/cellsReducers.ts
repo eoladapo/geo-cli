@@ -42,7 +42,7 @@ const cellsReducer = produce((state: CellsState = initialState, action: Action):
         order: state.order.filter((id) => id !== action.payload),
       };
 
-    case ActionTypes.INSERT_CELL_BEFORE:
+    case ActionTypes.INSERT_CELL_AFTER:
       const newCell: Cell = {
         id: Math.random().toString(36).substr(2, 5),
         type: action.payload.type,
