@@ -29,7 +29,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 
   return (
     <ReSizeable direction="vertical">
-      <div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
+      <div style={{ height: 'calc(100% - 10px)', display: 'flex', flexDirection: 'row' }}>
         <ReSizeable direction="horizontal">
           <CodeEditor initialValue={cell.content} onChange={(value) => updateCell(cell.id, value)} />
         </ReSizeable>
