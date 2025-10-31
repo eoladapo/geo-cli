@@ -4,9 +4,14 @@ import {
   InsertCellAfterAction,
   MoveCellAction,
   UpdateCellAction,
+  BundleStartAction,
+  BundleCompleteAction,
+  Action,
 } from './../actions/index';
+import { Dispatch } from 'redux';
 import { ActionTypes } from '../action-types';
 import { CellTypes } from '../cell';
+import bundle from '../../bundler';
 
 export const updateCell = (id: string, content: string): UpdateCellAction => {
   return {
@@ -42,5 +47,26 @@ export const insertCellAfter = (id: string | null, type: CellTypes): InsertCellA
       id,
       type,
     },
+  };
+};
+
+export const createBundle = (cellId: string, input: string) => {
+  return async (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionTypes.BUNDLE_START,
+      payload: {
+        cellId,
+      },
+    });
+
+    const result = await bundle(input);
+
+    dispatch({
+      type: ActionTypes.BUNDLE_COMPLETE,
+      payload: {
+        cellId,
+        bundle: result,
+      },
+    });
   };
 };
