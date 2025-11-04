@@ -1,3 +1,4 @@
+import './code-cell.css';
 import React, { useEffect } from 'react';
 import CodeEditor from './Code-Editor';
 import Preview from './Preview';
@@ -15,6 +16,10 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
   const bundle = useTypedSelector((state) => state.bundles[cell.id]);
 
   useEffect(() => {
+    if (!bundle) {
+      createBundle(cell.id, cell.content);
+      return;
+    }
     const timer = setTimeout(async () => {
       createBundle(cell.id, cell.content);
     }, 750);
@@ -22,7 +27,9 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [cell.content, cell.id]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cell.content, cell.id, createBundle]);
 
   return (
     <ReSizeable direction="vertical">
@@ -30,7 +37,17 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
         <ReSizeable direction="horizontal">
           <CodeEditor initialValue={cell.content} onChange={(value) => updateCell(cell.id, value)} />
         </ReSizeable>
-        {bundle && <Preview code={bundle.code} err={bundle.err} />}
+        <div>
+          {!bundle || bundle.loading ? (
+            <div className="progress-wrapper">
+              <div className="progress-cover">
+                <progress className="progress is-small is-primary " max="100"></progress>
+              </div>
+            </div>
+          ) : (
+            <Preview code={bundle.code} err={bundle.err} />
+          )}
+        </div>
       </div>
     </ReSizeable>
   );
